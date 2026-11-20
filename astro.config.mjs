@@ -1,7 +1,9 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 
-// Trage hier die echte Domain ein, sobald sie feststeht.
+// Testphase auf GitHub Pages unter plumpsssack.github.io/reinekefunk/.
+// Sobald reinekefunk.de läuft: site auf 'https://reinekefunk.de' setzen und base löschen.
 export default defineConfig({
-  site: 'https://reinekefunk.de',
+  site: 'https://plumpsssack.github.io',
+  base: '/reinekefunk/',
 });
