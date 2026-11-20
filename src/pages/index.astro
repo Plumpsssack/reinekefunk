@@ -1,0 +1,185 @@
+---
+import Base from '../layouts/Base.astro';
+import { Image } from 'astro:assets';
+import { site } from '../data/site';
+
+const newTab = ' (öffnet neuen Tab)';
+
+// Strich-Icons für die Folgen-Buttons (24er-Raster, Farbe = Textfarbe)
+const icons: Record<string, string> = {
+  spotify:
+    '<circle cx="12" cy="12" r="10"/><path d="M7 9.5c3.5-1 7-.6 10 1"/><path d="M7.8 12.8c2.8-.7 5.6-.4 8 .9"/><path d="M8.6 15.8c2-.5 4-.3 5.8.6"/>',
+  apple: '<path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/>',
+  instagram:
+    '<rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/>',
+};
+---
+
+<Base>
+  <Image
+    class="cover"
+    src={site.ep.cover}
+    alt={site.ep.coverAlt}
+    widths={[400, 800, 1200]}
+    sizes="(max-width: 420px) calc(100vw - 32px), 388px"
+    loading="eager"
+    fetchpriority="high"
+  />
+
+  <header class="head">
+    <h1>{site.artist}</h1>
+    <p class="mono">Neue EP · {site.ep.title}</p>
+  </header>
+
+  <section class="card" aria-label="EP hören">
+    {
+      site.ep.links.map((link) => (
+        <a class="btn" href={link.href} target="_blank" rel="noopener">
+          <svg class="hs" aria-hidden="true" width="22" height="22" viewBox="0 0 24 24">
+            <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z" />
+          </svg>
+          <span>{link.label}<span class="visually-hidden">{newTab}</span></span>
+        </a>
+      ))
+    }
+
+    <nav class="follow" aria-label={`${site.artist} folgen`}>
+      <p class="mono">{site.artist} folgen</p>
+      <div class="pills">
+        {
+          site.follow.map((link) => (
+            <a class="pill" href={link.href} target="_blank" rel="noopener">
+              <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={icons[link.icon]} />
+              {link.label}<span class="visually-hidden">{newTab}</span>
+            </a>
+          ))
+        }
+      </div>
+    </nav>
+  </section>
+</Base>
+
+<style>
+  .cover {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    border: 3px solid var(--ink);
+    border-radius: 12px;
+    box-shadow: 0 10px 28px rgba(20, 18, 22, 0.18);
+  }
+
+  .head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+  }
+  .head h1 {
+    margin: 0;
+    font-size: clamp(44px, 14vw, 64px);
+    line-height: 0.9;
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    text-transform: uppercase;
+  }
+  .head p {
+    margin: 0;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+  }
+
+  .card {
+    width: 100%;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.28);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    border-radius: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .btn {
+    min-height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 0 20px;
+    border-radius: 12px;
+    background-color: var(--btn);
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background-color 0.15s ease;
+  }
+  .btn:hover {
+    background-color: var(--btn-hover);
+  }
+  .hs {
+    fill: var(--banana);
+    flex: none;
+  }
+  .btn:hover .hs {
+    animation: ring 0.5s ease-in-out;
+  }
+  @keyframes ring {
+    0%, 100% { transform: rotate(0); }
+    20% { transform: rotate(-12deg); }
+    40% { transform: rotate(12deg); }
+    60% { transform: rotate(-8deg); }
+    80% { transform: rotate(8deg); }
+  }
+
+  .follow {
+    padding-top: 16px;
+    border-top: 1px solid rgba(20, 18, 22, 0.15);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .follow p {
+    margin: 0;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: var(--ink-soft);
+  }
+  .pills {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .pill {
+    flex: 1 1 auto;
+    padding: 0 16px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 1px solid rgba(20, 18, 22, 0.35);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.2);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 600;
+    transition: background-color 0.15s ease;
+  }
+  .pill:hover {
+    background-color: rgba(255, 255, 255, 0.45);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn:hover .hs {
+      animation: none;
+    }
+  }
+</style>

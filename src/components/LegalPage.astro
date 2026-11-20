@@ -1,0 +1,54 @@
+---
+import Base from '../layouts/Base.astro';
+
+interface Props {
+  title: string;
+}
+const { title } = Astro.props;
+---
+
+<Base title={`${title} – Reineke`} noindex>
+  <a class="back mono" href="/">← Zurück</a>
+  <article class="card">
+    <h1>{title}</h1>
+    <slot />
+  </article>
+</Base>
+
+<style>
+  .back {
+    align-self: flex-start;
+    padding: 10px 0;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+  }
+  .back:hover {
+    text-decoration: underline;
+  }
+  .card {
+    width: 100%;
+    padding: 24px 20px;
+    background: rgba(255, 255, 255, 0.6);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 18px;
+    font-size: 16px;
+    line-height: 1.55;
+  }
+  .card :global(h1) {
+    margin: 0 0 16px;
+    font-size: 32px;
+    line-height: 1.05;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  .card :global(h2) {
+    margin: 24px 0 8px;
+    font-size: 18px;
+  }
+  .card :global(p) {
+    margin: 0 0 12px;
+  }
+</style>

@@ -1,0 +1,71 @@
+@import '@fontsource-variable/bricolage-grotesque';
+@import '@fontsource/dm-mono/400.css';
+@import '@fontsource/dm-mono/500.css';
+
+:root {
+  --ink: #141216;
+  --ink-soft: #2e2a33;
+  --green: #ddfadd;
+  --pink: #eba4f7;
+  --blue: #a6cefa;
+  --banana: #f6d33c;
+  --btn: #211e26;
+  --btn-hover: #38333f;
+  --font-sans: 'Bricolage Grotesque Variable', system-ui, sans-serif;
+  --font-mono: 'DM Mono', ui-monospace, monospace;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100svh;
+  font-family: var(--font-sans);
+  color: var(--ink);
+  background: linear-gradient(
+    152deg,
+    var(--green) 0,
+    var(--green) 34%,
+    var(--ink) 34%,
+    var(--ink) calc(34% + 7px),
+    var(--pink) calc(34% + 7px),
+    var(--pink) 63%,
+    var(--ink) 63%,
+    var(--ink) calc(63% + 7px),
+    var(--blue) calc(63% + 7px),
+    var(--blue) 100%
+  );
+  background-attachment: fixed;
+}
+
+a {
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

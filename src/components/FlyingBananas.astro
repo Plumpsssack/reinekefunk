@@ -1,0 +1,70 @@
+---
+// Langsam fliegende Bananen im Hintergrund (rein dekorativ).
+// [links in %, Größe in px, Dauer in s, Startversatz in s, Drehrichtung]
+const bananas: [number, number, number, number, 'a' | 'b'][] = [
+  [6, 46, 26, -2, 'a'],
+  [22, 34, 32, -14, 'b'],
+  [40, 58, 28, -8, 'a'],
+  [58, 38, 34, -20, 'b'],
+  [74, 52, 24, -5, 'a'],
+  [88, 40, 30, -17, 'b'],
+  [14, 62, 36, -25, 'b'],
+  [66, 44, 27, -12, 'a'],
+  [32, 30, 22, -3, 'b'],
+];
+---
+
+<div class="sky" aria-hidden="true">
+  {
+    bananas.map(([left, size, dur, delay, dir]) => (
+      <img
+        class:list={['ban', `ban-${dir}`]}
+        src="/banana.svg"
+        alt=""
+        width={size}
+        height={size}
+        style={`left:${left}%;animation-duration:${dur}s;animation-delay:${delay}s`}
+      />
+    ))
+  }
+</div>
+
+<style>
+  .sky {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .ban {
+    position: absolute;
+    top: 0;
+    display: block;
+    opacity: 0.9;
+    will-change: transform;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+  .ban-a {
+    animation-name: flyA;
+  }
+  .ban-b {
+    animation-name: flyB;
+  }
+  @keyframes flyA {
+    0% { transform: translate(0, 105vh) rotate(0deg); }
+    50% { transform: translate(28px, 45vh) rotate(180deg); }
+    100% { transform: translate(0, -15vh) rotate(360deg); }
+  }
+  @keyframes flyB {
+    0% { transform: translate(0, 105vh) rotate(0deg); }
+    50% { transform: translate(-28px, 45vh) rotate(-180deg); }
+    100% { transform: translate(0, -15vh) rotate(-360deg); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .sky {
+      display: none;
+    }
+  }
+</style>
